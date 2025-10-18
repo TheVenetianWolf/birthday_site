@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Happy Birthday, Sister! 🎂</title>
+<meta name="description" content="Animated Happy Birthday page with karaoke lyrics, balloons, confetti, and candles." />
+<style>
+:root {
+  /* Night-sky palette */
+  --bg1: #06070e;
+  --bg2: #101321;
+  --ink: #e8e8f2;
+
+  /* Accents */
+  --accent: #ff5faf;
+  --accent2: #ffda65;
+
+  /* Cake colours */
+  --cake: #f88ca5;
+  --icing: #fff2f8;
+  --candle: #ffc93c;
+  --flame: #ff7b00;
+  --flame2: #ffeaa7;
+}
+
+* { box-sizing: border-box; }
+html, body { height: 100%; margin: 0; font-family: 'Poppins', system-ui, sans-serif; }
+
+body {
+  color: var(--ink);
+  background: radial-gradient(1200px 600px at 70% -20%, #54258333, transparent 60%),
+              radial-gradient(800px 400px at 20% 120%, #1f2b99aa, transparent 60%),
+              linear-gradient(180deg, var(--bg1), var(--bg2));
+  overflow-x: hidden;
+}
+
+/* Title glows softly */
+.title {
+  text-align: center;
+  margin: clamp(20px, 5vh, 48px) auto 12px;
+  font-weight: 900;
+  letter-spacing: 0.02em;
+  line-height: 1.05;
+  font-size: clamp(32px, 8vw, 72px);
+  background: linear-gradient(90deg, var(--accent), var(--accent2), #fff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 0 20px #ff6faacc);
+}
+
+.subtitle {
+  text-align: center;
+  margin: 0 auto 16px;
+  opacity: 0.9;
+  font-size: clamp(14px, 2.5vw, 18px);
+}
+
+.stage {
+  display: grid;
+  place-items: center;
+  gap: 22px;
+  padding: 12px 16px 28px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+/* === Cake and candles === */
+.cake-wrap {
+  position: relative;
+  display: grid;
+  place-items: center;
+  margin-top: 10px;
+}
+
+.cake {
+  width: clamp(240px, 50vw, 420px);
+  aspect-ratio: 3 / 2;
+  background: radial-gradient(120% 100% at 50% 0%, var(--icing) 0 48%, transparent 49%) top/100% 55% no-repeat,
+              linear-gradient(var(--cake), var(--cake)) bottom/100% 53% no-repeat;
+  border-radius: 18px;
+  position: relative;
+  filter: drop-shadow(0 10px 25px #0007);
+  border: 2px solid #ffffff33;
+}
+
+.plate {
+  position: absolute;
+  inset: auto 6% -10% 6%;
+  height: 14%;
+  background: linear-gradient(#ffffff40, #ffffff10);
+  border-radius: 0 0 22px 22px;
+}
+
+.candles {
+  position: absolute;
+  top: -12%;              /* lift candles up to rest above the icing */
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: clamp(12px, 3vw, 22px);
+  z-index: 2;             /* ensure they stay above the icing layer */
+}
+
+.candle {
+  width: clamp(10px, 2vw, 14px);
+  height: clamp(42px, 9vw, 64px);
+  background: repeating-linear-gradient(45deg, #ffd166 0 8px, #ffb703 8px 16px);
+  border-radius: 5px;
+  position: relative;
+  cursor: pointer;
+  border: 1px solid #00000033;
+  box-shadow: 0 0 10px #ffb70355;
+}
+
+.wick {
+  position: absolute;
+  top: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 2px;
+  height: 10px;
+  background: #222;
+  border-radius: 1px;
+}
+
+.flame {
+  position: absolute;
+  top: -26px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 18px;
+  height: 26px;
+  background: radial-gradient(50% 60% at 50% 60%, var(--flame2), var(--flame) 62%, #ff6600 100%);
+  border-radius: 50% 50% 50% 50% / 65% 65% 35% 35%;
+  filter: drop-shadow(0 0 12px var(--flame2));
+  transform-origin: bottom center;
+  animation: flicker 120ms infinite alternate, sway 2.2s ease-in-out infinite;
+}
+
+@keyframes flicker {
+  from { filter: drop-shadow(0 0 5px var(--flame2)); }
+  to   { filter: drop-shadow(0 0 16px #fffac2); }
+}
+
+@keyframes sway {
+  0%, 100% { rotate: -2deg; }
+  50% { rotate: 2deg; }
+}
+
+.blown .flame { display: none; }
+
+.hint {
+  text-align: center;
+  font-size: 12px;
+  opacity: 0.75;
+  margin-top: 6px;
+}
+
+/* === Controls === */
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 4px;
+}
+
+button {
+  border: none;
+  cursor: pointer;
+  border-radius: 999px;
+  padding: 14px 18px;
+  font-weight: 700;
+  letter-spacing: .2px;
+  color: #0a0a0a;
+  background: linear-gradient(180deg, var(--accent2), var(--accent));
+  box-shadow: 0 3px 10px #0008;
+  transition: transform .1s ease, box-shadow .2s ease;
+}
+button:hover { transform: scale(1.05); box-shadow: 0 5px 16px #000a; }
+button:active { transform: scale(0.96); }
+
+/* === Lyrics === */
+.lyrics {
+  max-width: 860px;
+  width: 100%;
+  margin: 8px auto 0;
+  padding: 14px 18px;
+  background: #151829cc;
+  border: 1px solid #ffffff22;
+  border-radius: 16px;
+  backdrop-filter: blur(8px);
+}
+.line {
+  font-size: clamp(16px, 3vw, 28px);
+  line-height: 1.35;
+  margin: 6px 0;
+  text-align: center;
+  color: #eaeaff;
+}
+.word {
+  padding: 2px 4px;
+  border-radius: 6px;
+  transition: background .2s ease, color .2s ease;
+}
+.word.active {
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
+  color: #111;
+}
+
+/* === Balloons === */
+.balloons {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: -1;
+}
+.balloon {
+  position: absolute;
+  bottom: -20vh;
+  width: clamp(30px, 6vw, 64px);
+  aspect-ratio: 1/1.2;
+  background: radial-gradient(circle at 30% 30%, #fff5, transparent 55%),
+              var(--balloonClr, #ff6b6b);
+  border-radius: 50% 50% 48% 52% / 58% 58% 42% 42%;
+  box-shadow: inset -6px -10px 18px #0006, 0 12px 22px #0003;
+  animation: floatUp var(--dur, 14s) linear infinite;
+}
+.balloon::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%) rotate(1deg);
+  width: 1.5px;
+  height: 20vh;
+  background: linear-gradient(#ffffff55, #ffffff11);
+  border-radius: 50% 50% 0 0 / 20% 20% 0 0;
+}
+
+@keyframes floatUp {
+  to { transform: translateY(-130vh) translateX(var(--drift, 0px)); }
+}
+
+/* === Confetti === */
+#confetti {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .balloon, .flame { animation: none !important; }
+  #confetti { display: none; }
+}
+
+.footer {
+  text-align: center;
+  font-size: 12px;
+  opacity: .6;
+  margin: 20px 0;
+  color: #aaa;
+}
+
+</style>
+</head>
+<body>
+  <h1 class="title" id="headline">Happy Birthday, Sister! 🎉</h1>
+  <p class="subtitle">With sparkle, balloons, and a proper sing-song.</p>
+
+  <main class="stage" aria-live="polite">
+    <section class="cake-wrap" aria-label="Birthday cake with three candles">
+      <div class="cake" role="img" aria-label="Pink cake with icing and candles">
+        <div class="candles" id="candles">
+          <div class="candle" tabindex="0" aria-label="Candle 1">
+            <span class="wick"></span><span class="flame" aria-hidden="true"></span>
+          </div>
+          <div class="candle" tabindex="0" aria-label="Candle 2">
+            <span class="wick"></span><span class="flame" aria-hidden="true"></span>
+          </div>
+          <div class="candle" tabindex="0" aria-label="Candle 3">
+            <span class="wick"></span><span class="flame" aria-hidden="true"></span>
+          </div>
+        </div>
+        <div class="plate" aria-hidden="true"></div>
+      </div>
+      <div class="hint" id="hint">Click a candle to blow it out 🔥→🕯️</div>
+    </section>
+
+    <section class="controls">
+      <button id="play">▶️ Play song</button>
+      <button id="pause" disabled>⏸️ Pause</button>
+      <button id="restart" disabled>🔁 Restart</button>
+      <button id="confettiBtn">🎊 Confetti</button>
+    </section>
+
+    <section class="lyrics" id="lyrics" aria-label="Karaoke lyrics">
+      <!-- Filled by JS -->
+    </section>
+  </main>
+
+  <!-- Balloons layer -->
+  <div class="balloons" id="balloons" aria-hidden="true"></div>
+
+  <!-- Confetti canvas -->
+  <canvas id="confetti" width="0" height="0" aria-hidden="true"></canvas>
+
+<script>
+/* ========= Personalisation ========= */
+const params = new URLSearchParams(location.search);
+const person = params.get('name')?.trim() || 'Sister';
+const headline = document.getElementById('headline');
+headline.textContent = `Happy Birthday, ${person}! 🎉`;
+
+/* ========= Lyrics + Karaoke ========= */
+const verses = [
+  "Happy birthday to you",
+  "Happy birthday to you",
+  `Happy birthday dear ${person}`,
+  "Happy birthday to you"
+];
+
+// Render lines and words
+const lyricsEl = document.getElementById('lyrics');
+const lineEls = verses.map((line,i)=>{
+  const lineEl = document.createElement('p');
+  lineEl.className = 'line';
+  line.split(' ').forEach((w,j)=>{
+    const span = document.createElement('span');
+    span.className = 'word';
+    span.textContent = w + (j === line.split(' ').length-1 ? '' : ' ');
+    lineEl.appendChild(span);
+  });
+  lyricsEl.appendChild(lineEl);
+  return lineEl;
+});
+
+// Build a sequence of word spans for karaoke highlighting
+const wordQueue = [];
+lineEls.forEach((el, lineIndex)=>{
+  const words = [...el.querySelectorAll('.word')];
+  words.forEach((w)=> wordQueue.push({el:w, lineIndex}));
+});
+
+/* ========= Web Audio melody (no external files) ========= */
+let AudioCtx = window.AudioContext || window.webkitAudioContext;
+let actx, masterGain, isPlaying=false, isPaused=false, startTime=0, playedMs=0, timers=[];
+const bpm = 88; // relaxed tempo
+const beat = 60_000 / bpm; // ms per beat
+
+// Frequencies (Hz) for notes we need, 4 = middle C octave
+const NOTES = {
+  C4:261.63, D4:293.66, E4:329.63, F4:349.23, G4:392.00, A4:440.00, B4:493.88,
+  C5:523.25, D5:587.33
+};
+
+// “Happy Birthday” melody | [note, beats]
+const MELODY = [
+  ['G4',1],['G4',1],['A4',2/3],['G4',2/3],['C5',2/3],['B4',4/3],
+  ['G4',1],['G4',1],['A4',2/3],['G4',2/3],['D5',2/3],['C5',4/3],
+  ['G4',1],['G4',1],['G4',2/3],['E4',2/3],['C5',2/3],['B4',2/3],['A4',2/3],
+  ['F4',1],['F4',1],['E4',2/3],['C5',2/3],['D5',2/3],['C5',4/3],
+];
+
+// Map melody timing to words for karaoke pacing (rough but feels right)
+const WORD_TIMES = (()=> {
+  const totalBeats = MELODY.reduce((s, [,b])=>s+b,0);
+  const totalMs = totalBeats * beat;
+  const perWord = totalMs / wordQueue.length;
+  return wordQueue.map((_,i)=> i*perWord);
+})();
+
+function setupAudio(){
+  if (actx) return;
+  actx = new AudioCtx();
+  masterGain = actx.createGain();
+  masterGain.gain.value = 0.14; // overall loudness
+  masterGain.connect(actx.destination);
+}
+
+function scheduleMelody(offsetMs=0){
+  let t = actx.currentTime + 0.05;
+  let accMs = 0;
+  MELODY.forEach(([note, beats], idx)=>{
+    const durMs = beats * beat;
+    const startMs = accMs;
+    const endMs = accMs + durMs;
+    accMs = endMs;
+
+    if (endMs <= offsetMs) return; // already played
+
+    const osc = actx.createOscillator();
+    const gain = actx.createGain();
+    osc.type = 'triangle';
+    osc.frequency.value = NOTES[note];
+    // Envelope
+    const a = 0.005, d = 0.07, s = 0.75, r = 0.12;
+    const start = t + Math.max(0, (startMs - offsetMs))/1000;
+    const end = t + Math.max(0, (endMs - offsetMs))/1000;
+
+    gain.gain.setValueAtTime(0.0001, start);
+    gain.gain.linearRampToValueAtTime(1.0, start + a);
+    gain.gain.linearRampToValueAtTime(s, start + a + d);
+    gain.gain.setValueAtTime(s, end - r);
+    gain.gain.exponentialRampToValueAtTime(0.0001, end);
+
+    osc.connect(gain); gain.connect(masterGain);
+    osc.start(start); osc.stop(end + 0.02);
+  });
+
+  // Karaoke highlights
+  const begin = performance.now();
+  wordQueue.forEach((w,i)=>{
+    const when = WORD_TIMES[i] - offsetMs;
+    if (when < 0) return;
+    const id = setTimeout(()=> {
+      w.el.classList.add('active');
+      // gentle auto-scroll on mobile
+      if (i % 6 === 0) w.el.scrollIntoView({block:'center', behavior:'smooth'});
+    }, Math.max(0, when));
+    timers.push(id);
+  });
+
+  // End state
+  const totalMs = MELODY.reduce((s,[,b])=> s + b*beat, 0);
+  const endId = setTimeout(()=>{
+    isPlaying=false; isPaused=false;
+    playBtn.disabled=false; pauseBtn.disabled=true; restartBtn.disabled=false;
+    launchConfettiBurst(300);
+  }, Math.max(0, totalMs - offsetMs + 100));
+  timers.push(endId);
+}
+
+function play(){
+  setupAudio();
+  actx.resume();
+  isPlaying=true; isPaused=false;
+  playBtn.disabled=true; pauseBtn.disabled=false; restartBtn.disabled=false;
+  startTime = performance.now();
+  scheduleMelody(playedMs);
+}
+
+function pause(){
+  if(!isPlaying) return;
+  isPlaying=false; isPaused=true;
+  playedMs += performance.now() - startTime;
+  clearTimers();
+  actx.suspend();
+  pauseBtn.disabled=true; playBtn.disabled=false;
+}
+
+function restart(){
+  clearTimers();
+  [...document.querySelectorAll('.word.active')].forEach(w=> w.classList.remove('active'));
+  playedMs=0; startTime=0;
+  isPlaying=false; isPaused=false;
+  pauseBtn.disabled=true; restartBtn.disabled=true; playBtn.disabled=false;
+  actx && actx.resume(); // keep context alive
+}
+
+function clearTimers(){ timers.forEach(clearTimeout); timers.length=0; }
+
+/* ========= Controls ========= */
+const playBtn = document.getElementById('play');
+const pauseBtn = document.getElementById('pause');
+const restartBtn = document.getElementById('restart');
+
+playBtn.addEventListener('click', play);
+pauseBtn.addEventListener('click', pause);
+restartBtn.addEventListener('click', restart);
+
+/* ========= Candles (click to blow out / relight) ========= */
+const candles = document.getElementById('candles');
+candles.addEventListener('click', (e)=>{
+  const c = e.target.closest('.candle'); if(!c) return;
+  c.classList.toggle('blown');
+  c.setAttribute('aria-label', c.classList.contains('blown') ? 'Candle (blown out)' : 'Candle (lit)');
+  const allBlown = [...candles.querySelectorAll('.candle')].every(x=>x.classList.contains('blown'));
+  document.getElementById('hint').textContent = allBlown ? 'Make a wish ✨' : 'Click a candle to blow it out 🔥→🕯️';
+  if (allBlown) launchConfettiBurst(220);
+});
+candles.addEventListener('keydown', (e)=>{
+  if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); e.target.click(); }
+});
+
+/* ========= Balloons ========= */
+const balloonColours = ['#ff6b6b','#ffd166','#06d6a0','#4cc9f0','#f72585','#b8f2e6','#f79d84'];
+function spawnBalloons(){
+  const layer = document.getElementById('balloons');
+  for(let i=0; i<14; i++){
+    const b = document.createElement('div');
+    b.className='balloon';
+    b.style.left = Math.random()*100 + 'vw';
+    b.style.setProperty('--drift', (Math.random()*80-40)+'px');
+    b.style.setProperty('--dur', (12 + Math.random()*10) + 's');
+    b.style.setProperty('--balloonClr', balloonColours[i%balloonColours.length]);
+    b.style.animationDelay = (-Math.random()*12)+'s';
+    layer.appendChild(b);
+  }
+}
+spawnBalloons();
+
+/* ========= Confetti (tiny canvas engine) ========= */
+const cvs = document.getElementById('confetti'), ctx = cvs.getContext('2d');
+function resize(){
+  cvs.width = innerWidth * devicePixelRatio;
+  cvs.height = innerHeight * devicePixelRatio;
+  ctx.scale(devicePixelRatio, devicePixelRatio);
+}
+addEventListener('resize', resize); resize();
+
+let confetti = [];
+function launchConfettiBurst(count=180){
+  const colours = ['#ff6b6b','#ffd166','#06d6a0','#4cc9f0','#f72585','#b5179e','#f1fa8c','#ffffff'];
+  for(let i=0;i<count;i++){
+    confetti.push({
+      x: Math.random()*innerWidth,
+      y: -10,
+      vx: (Math.random()*2-1)*3,
+      vy: Math.random()*-3 - 6,
+      ay: 0.15 + Math.random()*0.15,
+      size: 4 + Math.random()*6,
+      rot: Math.random()*Math.PI,
+      vr: (Math.random()*2-1)*0.2,
+      col: colours[Math.floor(Math.random()*colours.length)],
+      life: 0, max: 220 + Math.random()*180
+    });
+  }
+}
+document.getElementById('confettiBtn').addEventListener('click', ()=> launchConfettiBurst(220));
+
+function tick(){
+  ctx.clearRect(0,0,innerWidth,innerHeight);
+  confetti = confetti.filter(p=> p.life < p.max);
+  confetti.forEach(p=>{
+    p.vy += p.ay; p.x += p.vx; p.y += p.vy; p.rot += p.vr; p.life++;
+    ctx.save();
+    ctx.translate(p.x, p.y);
+    ctx.rotate(p.rot);
+    ctx.fillStyle = p.col;
+    ctx.fillRect(-p.size/2, -p.size/2, p.size, p.size);
+    ctx.restore();
+  });
+  requestAnimationFrame(tick);
+}
+tick();
+
+/* ========= Small delights ========= */
+// Auto confetti on first play
+playBtn.addEventListener('click', ()=> setTimeout(()=> launchConfettiBurst(160), 500));
+
+// Ensure buttons are accessible after autoplay policies block audio until click
+document.addEventListener('keydown', e=>{
+  if((e.key === 'k' || e.key === ' ') && !isPlaying) play();
+});
+
+// Inject lines now (already created), but also speak if user wants (off by default)
+</script>
+
+<footer class="footer">
+  Built with vanilla HTML/CSS/JS • Add <code>?name=YourSister</code> to personalise 💖
+</footer>
+</body>
+</html>
