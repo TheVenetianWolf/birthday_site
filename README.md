@@ -1,6 +1,6 @@
 # Happy Birthday Web 🎂🎉
 
-A tiny, single-file party page that sings “Happy Birthday,” highlights lyrics karaoke-style, floats balloons, fires confetti, and lets you blow out animated candles. Built with plain HTML/CSS/JS—no build tools, no dependencies.
+A tiny, single-file party page that sings “Happy Birthday,” highlights lyrics karaoke-style, floats balloons, fires confetti, and lets you blow out animated candles. Built with plain HTML/CSS/JS, no build tools, no dependencies.
 
 ## Quick start
 
